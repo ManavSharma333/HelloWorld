@@ -1,0 +1,42 @@
+pipeline {
+    agent any  // This means the pipeline can run on any available agent
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // This pulls the code from your GitHub repository
+                git 'https://github.com/your-username/your-repository.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // This runs Maven to build the project
+                sh 'mvn clean install'  // Use 'mvn clean package' if you just want to package the app
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // This runs Maven tests
+                sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Placeholder for deployment (add your deployment logic here)
+                echo "Deploying application..."
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline executed successfully!"
+        }
+        failure {
+            echo "Pipeline failed. Check the logs."
+        }
+    }
+}
